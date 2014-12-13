@@ -5,8 +5,10 @@
 ###大一
 
 
-*   在网易公开课上观看哈佛大学的[计算机科学cs50](http://v.163.com/special/opencourse/cs50.html)
-*   阅读"C++ primer"这本书.
+*   在网易公开课上观看哈佛大学的[计算机科学cs50](http://v.163.com/special/opencourse/cs50.html),
+或者MIT的[算法导论](http://v.163.com/special/opencourse/algorithms.html)
+*   阅读"C++ primer"这本书,或者"Think in java(JAVA 编程思想)"这本书
+*   上OJ上用JAVA或者C++水水题,顺便帮高朋学长的OJ添加几道题目
 *   远程联系,继续完善软院题库网
 
 分类作业:
@@ -36,7 +38,4 @@ _软院题库网_
 *   后端完成SMTP客户端,完成后实现FTP客户端
 *   Android实现富文本编辑器,也就是图文混排编辑器
 *   前端wordpress二次开发
-
-
-
 
