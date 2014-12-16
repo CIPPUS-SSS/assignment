@@ -81,7 +81,7 @@ int main()
 	while ( pc < N ) {
 	    k = 0;
 	    while(primes[k] * primes[k] <= m) {
-		    if (m % primes[k] == 0) { /* m bing-go */
+		    if (m % primes[k] = 0) { /* m bing-go */
 		        m += 2;
 		        k = 1;
 		    } else k++;
