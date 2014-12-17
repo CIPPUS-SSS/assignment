@@ -68,37 +68,6 @@ void (int const * src, int const * dst, int size)
 putchar("0123456789ABCDEF"[value & 0xFF]);
 ```
 
-#### 8
-下面这段程序有一个 bug, 请找出来, 请说出你找到的方法，其次，这段代码有什么可改进的。由此回想一下，你在编码的过程中，是否需要注意什么。程序内容为打印50以内的质数。
-```
-#define N 50
-int main()
-{
-    int primes[N];
-	int pc, m, k;
-
-    primes[0]=2;    /* 2 is first prime */
-	pc = 1;         /* 2 include */
-	m  = 3;         /* from 3 begin */
-	while ( pc < N ) {
-	    k = 0;
-	    while(primes[k] * primes[k] <= m) {
-		    if (m % primes[k] = 0) { /* m bing-go */
-		        m += 2;
-		        k = 1;
-		    } else k++;
-        }
-	    primes[pc++] = m;
-	    m += 2;
-	}
-	
-    printf("\n The first %d prime numbers are:\n",N);
-	for(k=0; k < pc; k++) printf("%d ",primes[k]);
-    
-    return 0;
-}
-```
-
 #### 9
 中国象棋有个将帅问题，棋盘上只有将和帅。请写出一段程序，输出将帅的所有合法位置。只用一个变量。位置对应分布如下。
 ```
