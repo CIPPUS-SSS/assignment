@@ -1,7 +1,7 @@
 ## ANSWER
 
 ### BEGIN
-这里有一个trick对2的整数冥取余就是与`2^n-1`
+这里有一个trick: 对2的整数冥取余就是与`2^n-1`
 
 ```
 void dec2bin(int x) 
