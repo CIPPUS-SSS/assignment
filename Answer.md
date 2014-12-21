@@ -38,7 +38,7 @@ while 那行确实是少了右括号，笔误...
 ```
 void copy(int const * src, int * dst, int size)
 {
-    int *end = src + (size - 1);
+    int *end = src + size;
     for (; src < end; src++, end++) {
         *dst = *src;
     }
