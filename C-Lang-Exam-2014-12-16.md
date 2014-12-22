@@ -41,7 +41,7 @@ int c;
 int lines = 0, words = 0, chars = 0;
 FILE * fp = fopen(__FILE__, "r");
 
-while ((c = fgetc(fp) != EOF) {
+while ((c = fgetc(fp)) != EOF) {
     switch(c) {
     case '\n': lines++;
     case ' ':
@@ -65,7 +65,7 @@ void (int const * src, int const * dst, int size)
 #### 7
 下面这段程序是10转16进制时的一个代码片段，请问做了什么 ? 为什么能这样做 ?
 ```
-putchar("0123456789ABCDEF"[value & 0xFF]);
+putchar("0123456789ABCDEF"[value & 0xF]);
 ```
 
 #### 9
