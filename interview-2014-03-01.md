@@ -12,3 +12,5 @@
 	A Java B ActionScript C ECMAScript
 7. 你认为FIR是什么?
 	A 台湾知名乐队 B 热门应用商店 C 测试发布工具
+8. 计算机的时间是连续的还是离散的?
+	A 连续 B 离散 C 可能连续,可能离散
