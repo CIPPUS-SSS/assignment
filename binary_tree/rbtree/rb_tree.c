@@ -75,4 +75,24 @@ rbtree_node insert(rbtree_node node,int key,int val){
 	else if(key > node.key)
 		node = insert(node.right,key,val);
 	else node.val = val;
+
+	/* 1. 如果插入到右边,只需要变色.
+	 * 2. 如果插入到左结点的左边,右旋,变成情况1.
+	 * 3. 如果插入到左结点的右边,左旋,变成情况2.
+	 * 根据递归的顺序,可以把这些操作统一,自底向上返回.
+	*/
+	/* 情况3 */	
+	if(is_red(node.right)&&!is_red(node.left))
+		node = rotate_left(node);
+	if(is_red(node.left)&&is_red(node.left.left))
+		node = rotate_right(node);
+	if(is_red(node.left)&&is_red(node.right))
+		flip_colors(node);
+	return node;
+}
+
+/* 判断结点是否为红色,如果结点为NULL,为黑色 */
+int is_red(rbtree_node node){
+	if(node==NULL)return -1;
+	return node.color==RED;
 }
