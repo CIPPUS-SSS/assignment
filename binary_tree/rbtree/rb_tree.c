@@ -30,9 +30,9 @@ rbtree_node new_node(int key,int value,enum rbtree_node_color color,rbtree_node 
 
 /* 更换颜色 */
 void flip_colors(rbtree_node node){
-	node.color = RED;
-	node.left.color = BLACK;
-	node.right.color = BLACK;
+	node.color = !node.color;
+	node.left.color = !node.left.color;
+	node.right.color = !node.right.color;
 }
 
 /* 左旋 */
@@ -118,17 +118,115 @@ rbtree_node rbtree_insert(rbtree_node node,int key,int val){
 }
 
 /*
- * 删除操作
- * 条件:当前结点不是2-node
- * 如果有必要引入不满足条件的4-node
- * 从底部把键移除
- * 再自底向上消除4结点
+ * 删除最小值
  */
-void rbtree_delete(key){
-
+void rbtree_delete_min(rbtree tree,key){
+	rbtree_node root = tree.root
+	if(root==NULL)
+		return;
+	if(!is_red(root.left)&&!is_red(root.right))
+		root.color = RED;
+	//TODO:释放空间
+	root = _rbtree_delete_min(root);
+	if(root!=NULL) root.color = BLACK;
 }
 
-void _rbtree_delete(rbtree_node node,int key){
-
+/*
+ * 删除最小值辅助函数
+ */
+rbtree_node _rbtree_delete_min(rbtree_node root){
+	if(root.left==NULL)
+		return NULL;
+	/*
+	 * 如果向下两个任何一个是红色的,
+	 * 就不用把红色传递下去,因为下面的红色可以
+	 * 用来构成最后删除结点的红色.
+	 * red        
+     * /    \     
+     * black black
+     * /          
+     * black      
+	 *
+	 */
+	if(!is_red(h.left)&&!is_red(h.left.left))
+		root = move_red_left(root);
+	root.left = _rbtree_delete_min(h.left);
+	return fixup(root);
 }
+/*
+ * 向下移动红色,
+ * 首先是对h变色,
+ * 因为红色结点是不能相邻的,
+ * 右边结点的左结点是红色,会产生冲突,
+ * 要排除这种情况,重新平衡
+ */
+rbtree_node move_red_left(rbtree_node h){
+	// 先更换颜色,因为更换颜色不影响平衡.
+	// 抽象含义就是从父结点要挪用一个点,但是如果导致出现"多"结点
+	// 就从兄弟结点移过来一个.
+	// 把所有的情况都考虑进去了.
+	flip_colors(h);// 其实这一步就是借上面的结点,回头看下二三树的向下移动就能明白了.
+				   // 列一下二三树删除的情况.
+	if(!is_red(h.right.left)){
+		/* 如果右结点的左结点是红色,存在冲突,需要调整
+		 * black    
+         * /    \   
+         * red   red
+         * /     /  
+         * black red
+		 *
+		 * 需要对右结点进行右旋,变成.
+		 * 
+		 * black      
+         * /    \     
+         * red   red  
+         * /      \   
+         * black   red
+		 *
+		 * 然后对当前根节点左旋
+		 *
+		 * black
+         * /    \     
+         * red   red
+         * /      
+         * red   	
+		 * /
+		 * black
+		 *
+		 * 最后变色
+		 *
+		 * red 
+         * /    \     
+         * black black
+         * /      
+         * red   	
+		 * /
+		 * black
+		 *
+		 */
+
+		h.right = rotate_right(h.right);
+	}
+	return h;
+}
+//TODO:删除最大值
+//注意:操作是不对称的.
+/*
+ * 自底向上调整
+ */
+rbtree_node fixup(rbtree_node root){
+	/* 情况3:调整平衡 */	
+	if(is_red(node.right)&&!is_red(node.left))
+		node = rotate_left(node);
+	/* 情况2:强制左倾 */
+	if(is_red(node.left)&&is_red(node.left.left))
+		node = rotate_right(node);
+	/* 情况3:分解4-node */
+	if(is_red(node.left)&&is_red(node.right))
+		flip_colors(node);
+	return node;
+}
+
+
+
 
