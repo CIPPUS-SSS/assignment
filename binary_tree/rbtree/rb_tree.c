@@ -53,6 +53,12 @@ void rotate_right(rbtree_node node){
 	node.color = RED;
 }
 
+/* 辅助函数,判断结点是否为红色,如果结点为NULL,为黑色 */
+int is_red(rbtree_node node){
+	if(node==NULL)return -1;
+	return node.color==RED;
+}
+
 /* 红黑树 */
 typedef struct rbtree_t {
 	rbtree_node root;
@@ -65,8 +71,25 @@ rbtree new_rbtree(){
 	return t;
 }
 
-/* 插入操作 */
-rbtree_node insert(rbtree_node node,int key,int val){
+/* 
+ * 查找操作
+ * 和普通的二叉搜索树的方法一样
+ */
+int* rbtree_search(rbtree tree,int key){
+	rbtree_node node =  tree.root
+		while(node!=NULL){
+			if ( key == node.key)return &node.val;
+			else if ( key < node.key) x = x.left;
+			else if ( key > node.key) x = x.right;
+		}
+	return NULL;
+}
+
+/* 
+ * 插入操作
+ * 先自顶向下搜索,再自底向上调整
+ */
+rbtree_node rbtree_insert(rbtree_node node,int key,int val){
 	if(node == NULL){
 		return new_node(key,val,RED,NULL,NULL);
 	}
@@ -80,19 +103,32 @@ rbtree_node insert(rbtree_node node,int key,int val){
 	 * 2. 如果插入到左结点的左边,右旋,变成情况1.
 	 * 3. 如果插入到左结点的右边,左旋,变成情况2.
 	 * 根据递归的顺序,可以把这些操作统一,自底向上返回.
-	*/
-	/* 情况3 */	
+	 */
+
+	/* 情况3:调整平衡 */	
 	if(is_red(node.right)&&!is_red(node.left))
 		node = rotate_left(node);
+	/* 情况2:强制左倾 */
 	if(is_red(node.left)&&is_red(node.left.left))
 		node = rotate_right(node);
+	/* 情况3:分解4-node */
 	if(is_red(node.left)&&is_red(node.right))
 		flip_colors(node);
 	return node;
 }
 
-/* 判断结点是否为红色,如果结点为NULL,为黑色 */
-int is_red(rbtree_node node){
-	if(node==NULL)return -1;
-	return node.color==RED;
+/*
+ * 删除操作
+ * 条件:当前结点不是2-node
+ * 如果有必要引入不满足条件的4-node
+ * 从底部把键移除
+ * 再自底向上消除4结点
+ */
+void rbtree_delete(key){
+
 }
+
+void _rbtree_delete(rbtree_node node,int key){
+
+}
+
