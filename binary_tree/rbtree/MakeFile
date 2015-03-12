@@ -1,0 +1,6 @@
+OBJS=testmain.o
+
+test:$(OBJS)
+	gcc -o $(OBJS) testmain.c rb_tree.c
+clean:
+	rm $(OBJS)
