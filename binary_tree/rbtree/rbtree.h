@@ -29,9 +29,15 @@ typedef struct rbtree_t *rbtree;
 /* 创建红黑树 */
 rbtree new_rbtree();
 
+/* 中序遍历红黑树 */
+void rbtree_walk(rbtree_node node);
+
+/* 插入红黑树 */
+void rbtree_insert(rbtree tree,int key,int val);
+rbtree_node _rbtree_insert(rbtree_node node,int key,int val);
 
 /* 删除最小值和删除最小值的辅助函数 */
-void rbtree_delete_min(rbtree tree,int key);
+void rbtree_delete_min(rbtree tree);
 rbtree_node _rbtree_delete_min(rbtree_node root);
 
 /* 红色结点向左移动 */

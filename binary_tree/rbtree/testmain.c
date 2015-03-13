@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include "rbtree.h"
 int main(){
-	rbtree_node node = new_node(1,2,BLACK,NULL,NULL);	
-	printf("Hello World!\n");
+	rbtree tree = new_rbtree();
+	int i;
+	for(i=0;i<10;i++){
+		rbtree_insert(tree,i,i);
+	}
+	// printf("after deletiton\n");
+	// rbtree_delete_min(tree);
+	rbtree_walk(tree->root);
 }

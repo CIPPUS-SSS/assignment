@@ -40,9 +40,9 @@ rbtree_node rotate_right(rbtree_node node){
 	return x;
 }
 
-/* 辅助函数,判断结点是否为红色,如果结点为NULL,为黑色 */
+/* 辅助函数,判断结点是否为红色,NULL为黑色 */
 int is_red(rbtree_node node){
-	if(node==NULL)return 1;
+	if(node==NULL)return 0;
 	return node->color==RED;
 }
 
@@ -71,15 +71,20 @@ int* rbtree_search(rbtree tree,int key){
  * 插入操作
  * 先自顶向下搜索,再自底向上调整
  */
-rbtree_node rbtree_insert(rbtree_node node,int key,int val){
+void rbtree_insert(rbtree tree,int key,int val){
+	tree->root = _rbtree_insert(tree->root,key,val);
+	tree->root->color = BLACK;
+}
+
+rbtree_node _rbtree_insert(rbtree_node node,int key,int val){
 	if(node == NULL){
 		return new_node(key,val,RED,NULL,NULL);
 	}
 	if(key < node->key)
-		node = rbtree_insert(node->left,key,val);
-	else if(key > node->key)
-		node = rbtree_insert(node->right,key,val);
-	else node->val = val;
+		node->left = _rbtree_insert(node->left,key,val);
+	else if(key > node->key){
+		node->right = _rbtree_insert(node->right,key,val);
+	}else node->val = val;
 
 	/* 1. 如果插入到右边,只需要变色.
 	 * 2. 如果插入到左结点的左边,右旋,变成情况1.
@@ -87,23 +92,34 @@ rbtree_node rbtree_insert(rbtree_node node,int key,int val){
 	 * 根据递归的顺序,可以把这些操作统一,自底向上返回.
 	 */
 
-	/* 情况3:调整平衡 */	
-	if( is_red(node->right) && !is_red(node->left) )
+	/* 情况1:强制左倾 */
+	if( is_red(node->right) && !is_red(node->left) ){
 		node = rotate_left(node);
-	/* 情况2:强制左倾 */
-	if( is_red(node->left) && is_red(node->left->left) )
+	}
+	/* 情况2:调整平衡 */	
+	if( is_red(node->left) && is_red(node->left->left) ){
 		node = rotate_right(node);
+	}
 	/* 情况3:分解4-node */
-	if( is_red(node->left) && is_red(node->right) )
+	if( is_red(node->left) && is_red(node->right) ){
 		flip_colors(node);
+	}
 	return node;
 }
 
 void rbtree_walk(rbtree_node node){
-	if(node!=NULL)
-		printf("walk key:%d,val:%d\n",node->key,node->val);
+	if(node==NULL)
+		return;
+
 	if(node->left!=NULL)
 		rbtree_walk(node->left);
+
+	if(is_red(node)){
+		printf("\twalk key:%d,val:%d,color:red\n",node->key,node->val);
+	}else{
+		printf("\twalk key:%d,val:%d,color:black\n",node->key,node->val);
+	}
+
 	if(node->right!=NULL)
 		rbtree_walk(node->right);
 }
@@ -111,14 +127,13 @@ void rbtree_walk(rbtree_node node){
 /*
  * 删除最小值
  */
-void rbtree_delete_min(rbtree tree,int key){
+void rbtree_delete_min(rbtree tree){
 	rbtree_node root = tree->root;
 	if(root==NULL)
 		return;
 	if( !is_red(root->left) && !is_red(root->right) )
 		root->color = RED;
-	//TODO:释放空间
-	root = _rbtree_delete_min(root);
+	tree->root = _rbtree_delete_min(root);
 
 	if(root!=NULL) root->color = BLACK;
 }
@@ -127,8 +142,10 @@ void rbtree_delete_min(rbtree tree,int key){
  * 删除最小值辅助函数
  */
 rbtree_node _rbtree_delete_min(rbtree_node root){
-	if(root->left==NULL)
+	if(root->left==NULL){
+		free(root);
 		return NULL;
+	}
 	/*
 	 * 如果向下两个任何一个是红色的,
 	 * 就不用把红色传递下去,因为下面的红色可以
@@ -140,8 +157,9 @@ rbtree_node _rbtree_delete_min(rbtree_node root){
 	 * black      
 	 *
 	 */
-	if( !is_red(root->left) && !is_red(root->left->left) )
+	if( !is_red(root->left) && !is_red(root->left->left) ){
 		root = move_red_left(root);
+	}
 	root->left = _rbtree_delete_min(root->left);
 	return fixup(root);
 }
@@ -160,7 +178,7 @@ rbtree_node move_red_left(rbtree_node h){
 	// 把所有的情况都考虑进去了.
 	flip_colors(h);// 其实这一步就是借上面的结点,回头看下二三树的向下移动就能明白了.
 	// 列一下二三树删除的情况.
-	if( !is_red(h->right->left) ){
+	if( is_red(h->right->left) ){
 		/* 如果右结点的左结点是红色,存在冲突,需要调整
 		 * black    
 		 * /    \   
@@ -217,8 +235,7 @@ rbtree_node move_red_right(rbtree_node h){
 		h = rotate_right(h);  // 把指针左移一个
 		flip_colors(h);       // 把这个结点挤回去
 	}
-}
-
+} 
 int delete_max(rbtree tree){
 	rbtree_node root = tree->root;
 	if(root==NULL)return -1;
@@ -228,22 +245,22 @@ int delete_max(rbtree tree){
 	if(root!=NULL) root->color = BLACK;
 }
 
-rbtree_node _delete_max(rbtree_node h){
-	if( is_red(h->left) ){
-		h = rotate_right(h);
+rbtree_node _delete_max(rbtree_node root){
+	if( is_red(root->left) ){
+		root = rotate_right(root);
 	}
-	if( h->right == NULL ){
-		//TODO:释放空间
+	if( root->right == NULL ){
+		free(root);
 		return NULL;
 	}
 
-	if( !is_red(h->right) && !is_red(h->right->left) ){
-		h = move_red_right(h); 	
+	if( !is_red(root->right) && !is_red(root->right->left) ){
+		root = move_red_right(root); 	
 		//有必要就借结点.
 	}
 
-	h->right = _delete_max(h->left);
-	return fixup(h);
+	root->right = _delete_max(root->left);
+	return fixup(root);
 }
 
 int delete(rbtree tree,int key){
@@ -258,10 +275,11 @@ rbtree_node  _delete(rbtree_node h,int key){
  * 自底向上调整
  */
 rbtree_node fixup(rbtree_node node){
-	/* 情况3:调整平衡 */	
-	if( is_red(node->right) && !is_red(node->left) )
+	/* 情况1:强制左倾 */
+	if( is_red(node->right) && !is_red(node->left) ){
 		node = rotate_left(node);
-	/* 情况2:强制左倾 */
+	}
+	/* 情况2:调整平衡 */	
 	if( is_red(node->left) && is_red(node->left->left))
 		node = rotate_right(node);
 	/* 情况3:分解4-node */

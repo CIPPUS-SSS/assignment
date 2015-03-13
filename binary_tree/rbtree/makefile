@@ -1,4 +1,4 @@
-OBJS=testmain.o rb_tree.o
+OBJS=testmain.o rbtree.o
 CC=gcc
 DEPS=rbtree.h
 EXE=testmain
