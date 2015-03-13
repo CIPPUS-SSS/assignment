@@ -30,7 +30,7 @@ typedef struct rbtree_t *rbtree;
 rbtree new_rbtree();
 
 /* 中序遍历红黑树 */
-void rbtree_walk(rbtree_node node);
+void rbtree_walk(rbtree_node node,void (*visti)(rbtree_node node));
 
 /* 插入红黑树 */
 void rbtree_insert(rbtree tree,int key,int val);

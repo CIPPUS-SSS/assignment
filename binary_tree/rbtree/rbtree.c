@@ -107,21 +107,17 @@ rbtree_node _rbtree_insert(rbtree_node node,int key,int val){
 	return node;
 }
 
-void rbtree_walk(rbtree_node node){
+void rbtree_walk(rbtree_node node,void (*visit)(rbtree_node node)){
 	if(node==NULL)
 		return;
 
 	if(node->left!=NULL)
-		rbtree_walk(node->left);
+		rbtree_walk(node->left,visit);
 
-	if(is_red(node)){
-		printf("\twalk key:%d,val:%d,color:red\n",node->key,node->val);
-	}else{
-		printf("\twalk key:%d,val:%d,color:black\n",node->key,node->val);
-	}
+	visit(node);
 
 	if(node->right!=NULL)
-		rbtree_walk(node->right);
+		rbtree_walk(node->right,visit);
 }
 
 /*
