@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "rbtree.h"
 
@@ -17,7 +18,8 @@ void reset_str(char str[]){
 void test_fail(char *s){
 	printf("Test Failed:%s",s);
 }
-//#define TEST
+
+#define TEST
 int main(){
 #ifdef TEST
 	rbtree tree = new_rbtree();
@@ -26,7 +28,7 @@ int main(){
 		rbtree_insert(tree,i,i);
 	}
 	rbtree_walk(tree->root,&visit);
-	if(str_cmp(str,"0123456789") != 0){
+	if(strcmp(str,"0123456789") != 0){
 		test_fail("插入错误");
 		exit(1);
 	}
@@ -34,10 +36,10 @@ int main(){
 	rbtree_delete_min(tree);
 	reset_str(str);
 	rbtree_walk(tree->root,&visit);
-	if(str_cmp(str,"123456789") != 0){
+	if(strcmp(str,"123456789") != 0){
 		test_fail("错误");
 		exit(1);
 	}
-#endif
 	printf("Test ok!\n");
+#endif
 }
