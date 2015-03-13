@@ -27,6 +27,7 @@ int main(){
 	for(i=0;i<10;i++){
 		rbtree_insert(tree,i,i);
 	}
+
 	rbtree_walk(tree->root,&visit);
 	if(strcmp(str,"0123456789") != 0){
 		test_fail("插入错误");
@@ -37,9 +38,26 @@ int main(){
 	reset_str(str);
 	rbtree_walk(tree->root,&visit);
 	if(strcmp(str,"123456789") != 0){
-		test_fail("错误");
+		test_fail("删除最小值错误");
 		exit(1);
 	}
+
+	rbtree_delete_max(tree);
+	reset_str(str);
+	rbtree_walk(tree->root,&visit);
+	if(strcmp(str,"12345678") != 0){
+		test_fail("删除最大值错误");
+		exit(1);
+	}
+
+	rbtree_delete(tree,5);
+	reset_str(str);
+	rbtree_walk(tree->root,&visit);
+	if(strcmp(str,"12345678") != 0){
+		test_fail("删除任意值错误");
+		exit(1);
+	}
+
 	printf("Test ok!\n");
 #endif
 }

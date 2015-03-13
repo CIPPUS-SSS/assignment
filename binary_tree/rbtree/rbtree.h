@@ -47,8 +47,12 @@ rbtree_node move_red_left(rbtree_node h);
 rbtree_node move_red_right(rbtree_node h);
 
 /* 删除最大值和删除最大值的辅助函数 */
-int delete_max(rbtree tree);
-rbtree_node _delete_max(rbtree_node h);
+int rbtree_delete_max(rbtree tree);
+rbtree_node _rbtree_delete_max(rbtree_node node);
+
+/* 删除任意结点 */
+int rbtree_delete(rbtree tree,int key);
+rbtree_node _rbtree_delete(rbtree_node node,int key);
 
 /* 自底向上调整 */
 rbtree_node fixup(rbtree_node node);

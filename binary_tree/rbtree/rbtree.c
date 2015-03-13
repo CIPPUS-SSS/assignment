@@ -86,7 +86,8 @@ rbtree_node _rbtree_insert(rbtree_node node,int key,int val){
 		node->right = _rbtree_insert(node->right,key,val);
 	}else node->val = val;
 
-	/* 1. 如果插入到右边,只需要变色.
+	/*
+	 * 1. 如果插入到右边,只需要变色.
 	 * 2. 如果插入到左结点的左边,右旋,变成情况1.
 	 * 3. 如果插入到左结点的右边,左旋,变成情况2.
 	 * 根据递归的顺序,可以把这些操作统一,自底向上返回.
@@ -105,6 +106,17 @@ rbtree_node _rbtree_insert(rbtree_node node,int key,int val){
 		flip_colors(node);
 	}
 	return node;
+}
+
+void color_visit(rbtree_node node){
+	if( node == NULL ){
+		return;
+	}
+	if( node->color == RED){
+		printf("key:%d,val:%d,color:RED\n",node->key,node->val);
+	}else{
+		printf("key:%d,val:%d,color:BLACK\n",node->key,node->val);
+	}
 }
 
 void rbtree_walk(rbtree_node node,void (*visit)(rbtree_node node)){
@@ -231,20 +243,26 @@ rbtree_node move_red_right(rbtree_node h){
 		h = rotate_right(h);  // 把指针左移一个
 		flip_colors(h);       // 把这个结点挤回去
 	}
+	return h;
 } 
-int delete_max(rbtree tree){
+
+/* 删除最大值 */
+int rbtree_delete_max(rbtree tree){
 	rbtree_node root = tree->root;
-	if(root==NULL)return -1;
+	if(root==NULL)return 0;
 	if( !is_red(root->left) && !is_red(root->right) )
 		root->color = RED;
-	root = _delete_max(root);
+	root = _rbtree_delete_max(root);
 	if(root!=NULL) root->color = BLACK;
+	return 1;
 }
 
-rbtree_node _delete_max(rbtree_node root){
+/* 删除最大值的赋值函数 */
+rbtree_node _rbtree_delete_max(rbtree_node root){
 	if( is_red(root->left) ){
 		root = rotate_right(root);
 	}
+
 	if( root->right == NULL ){
 		free(root);
 		return NULL;
@@ -252,18 +270,17 @@ rbtree_node _delete_max(rbtree_node root){
 
 	if( !is_red(root->right) && !is_red(root->right->left) ){
 		root = move_red_right(root); 	
-		//有必要就借结点.
 	}
 
-	root->right = _delete_max(root->left);
+	root->right = _rbtree_delete_max(root->right);
 	return fixup(root);
 }
 
-int delete(rbtree tree,int key){
+int rbtree_delete(rbtree tree,int key){
 	return -1;
 }
 
-rbtree_node  _delete(rbtree_node h,int key){
+rbtree_node  _rbtree_delete(rbtree_node h,int key){
 	return NULL;
 }
 
