@@ -16,7 +16,7 @@ void reset_str(char str[]){
 }
 
 void test_fail(char *s){
-	printf("Test Failed:%s",s);
+	printf("Test Failed:%s\n",s);
 }
 
 #define TEST
@@ -50,13 +50,18 @@ int main(){
 		exit(1);
 	}
 
+	int *val = rbtree_search(tree,1);
+	if(val == NULL || *val != 1){
+		test_fail("查找错误");
+	}
+
+	/*
 	rbtree_delete(tree,5);
-	reset_str(str);
-	rbtree_walk(tree->root,&visit);
 	if(strcmp(str,"12345678") != 0){
 		test_fail("删除任意值错误");
 		exit(1);
 	}
+	*/
 
 	printf("Test ok!\n");
 #endif

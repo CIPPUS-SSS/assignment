@@ -32,6 +32,9 @@ rbtree new_rbtree();
 /* 中序遍历红黑树 */
 void rbtree_walk(rbtree_node node,void (*visti)(rbtree_node node));
 
+/* 搜索红黑树 */
+int* rbtree_search(rbtree tree,int key);
+
 /* 插入红黑树 */
 void rbtree_insert(rbtree tree,int key,int val);
 rbtree_node _rbtree_insert(rbtree_node node,int key,int val);

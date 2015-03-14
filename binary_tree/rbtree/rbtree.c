@@ -276,12 +276,44 @@ rbtree_node _rbtree_delete_max(rbtree_node root){
 	return fixup(root);
 }
 
+/* 删除任意值 */
 int rbtree_delete(rbtree tree,int key){
-	return -1;
+	int *val = rbtree_search(tree,key);
+	if(val==NULL) return 0;
+	rbtree_node root = tree->root;
+	if( !is_red(root->left) && !is_red(root->right) ){
+		root->color = RED;
+	}
+	root = _rbtree_delete(root,key);
+	if(root != NULL) root->color = BLACK;
+	return 1;
 }
 
+/* 删除任意值辅助函数 */
 rbtree_node  _rbtree_delete(rbtree_node h,int key){
-	return NULL;
+	if(key < h->key){
+		if( !is_red(h->left) && !is_red(h->left->left))
+			h = move_red_left(h);
+		h->left = _rbtree_delete(h->left,key);
+	}else{
+		if( is_red(h->left) )
+			h = rotate_right(h);
+		if( key == h->key && h->right == NULL){
+			free(h);
+			return NULL;
+		}
+		if( !is_red(h->right) && !is_red(h->right->left) )
+			h = move_red_right(h);
+		if( key == h->key ){
+			//TODO:获得最小值
+			rbtree_node x = min(h->right);
+			h->key = x->key;
+			h->val = x->val;
+			h->right = _rbtree_delete_min(h->right);
+		}else{
+			h->right = _rbtree_delete(h->right,key);
+		}
+	}
 }
 
 /*
