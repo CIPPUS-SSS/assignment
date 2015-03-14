@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "rbtree.h"
 
+rbtree_node _rbtree_min(rbtree_node x);
+
 /* 构建结点 */
 rbtree_node new_node(int key,int value,enum rbtree_node_color color,rbtree_node left,rbtree_node right){
 	rbtree_node node = malloc(sizeof(struct rbtree_node_t));
@@ -306,7 +308,7 @@ rbtree_node  _rbtree_delete(rbtree_node h,int key){
 			h = move_red_right(h);
 		if( key == h->key ){
 			//TODO:获得最小值
-			rbtree_node x = min(h->right);
+			rbtree_node x = _rbtree_min(h->right);
 			h->key = x->key;
 			h->val = x->val;
 			h->right = _rbtree_delete_min(h->right);
@@ -314,6 +316,19 @@ rbtree_node  _rbtree_delete(rbtree_node h,int key){
 			h->right = _rbtree_delete(h->right,key);
 		}
 	}
+}
+
+/* 删除最小值 */
+int* rbtree_min(rbtree tree){
+	if(tree->root!=NULL) return NULL;
+	rbtree_node node  = _rbtree_min(tree->root);
+	return &node->key;
+}
+
+/* 删除最大值 */
+rbtree_node _rbtree_min(rbtree_node x){
+	if(x->left==NULL)return x;
+	else return _rbtree_min(x->left);
 }
 
 /*

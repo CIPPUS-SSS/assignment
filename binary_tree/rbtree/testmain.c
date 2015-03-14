@@ -55,13 +55,13 @@ int main(){
 		test_fail("查找错误");
 	}
 
-	/*
 	rbtree_delete(tree,5);
-	if(strcmp(str,"12345678") != 0){
+	reset_str(str);
+	rbtree_walk(tree->root,&visit);
+	if(strcmp(str,"1234678") != 0){
 		test_fail("删除任意值错误");
 		exit(1);
 	}
-	*/
 
 	printf("Test ok!\n");
 #endif

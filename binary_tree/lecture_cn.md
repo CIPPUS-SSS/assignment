@@ -172,6 +172,9 @@ Q&A
 TODO
 可以参考维基百科证明
 
+#源码
+附带C实现的源码在当前目录的[rbtree](rbtree/)目录下.
+
 #相关资料
 
 1. [左倾红黑树讲义PDF](http://222.26.160.148/videoplayer/RedBlack.pdf?ich_u_r_i=5ff7abc3e9e5edde285689bc8dcac1eb&ich_s_t_a_r_t=0&ich_e_n_d=0&ich_k_e_y=1545038911750263252407&ich_t_y_p_e=1&ich_d_i_s_k_i_d=1&ich_u_n_i_t=1)
