@@ -40,28 +40,16 @@ int* rbtree_min(rbtree tree);
 
 /* 插入红黑树 */
 void rbtree_insert(rbtree tree,int key,int val);
-rbtree_node _rbtree_insert(rbtree_node node,int key,int val);
 
-/* 删除最小值和删除最小值的辅助函数 */
+/* 删除最小值 */
 void rbtree_delete_min(rbtree tree);
-rbtree_node _rbtree_delete_min(rbtree_node root);
 
-/* 红色结点向左移动 */
-rbtree_node move_red_left(rbtree_node h);
-
-/* 红色结点向右移动 */
-rbtree_node move_red_right(rbtree_node h);
-
-/* 删除最大值和删除最大值的辅助函数 */
+/* 删除最大值 */
 int rbtree_delete_max(rbtree tree);
-rbtree_node _rbtree_delete_max(rbtree_node node);
 
 /* 删除任意结点 */
 int rbtree_delete(rbtree tree,int key);
-rbtree_node _rbtree_delete(rbtree_node node,int key);
 
-/* 自底向上调整 */
-rbtree_node fixup(rbtree_node node);
 
 #endif
 

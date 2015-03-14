@@ -2,7 +2,15 @@
 #include <stdlib.h>
 #include "rbtree.h"
 
+/* 局部函数 */
 rbtree_node _rbtree_min(rbtree_node x);
+rbtree_node _rbtree_insert(rbtree_node node,int key,int val);
+rbtree_node _rbtree_delete_min(rbtree_node root);
+rbtree_node _rbtree_delete_max(rbtree_node node);
+rbtree_node _rbtree_delete(rbtree_node node,int key);
+rbtree_node move_red_left(rbtree_node h);
+rbtree_node move_red_right(rbtree_node h);
+rbtree_node fixup(rbtree_node node);
 
 /* 构建结点 */
 rbtree_node new_node(int key,int value,enum rbtree_node_color color,rbtree_node left,rbtree_node right){

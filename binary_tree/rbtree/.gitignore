@@ -1,4 +1,6 @@
 *
 !*.c
 !*.h
-makefile
+!makefile
+!LICENSE
+!README.md
