@@ -101,3 +101,5 @@ int main(){
 #### END.
 写出你在C语言中觉得最酷炫的一个语言特性！并说明为什么。
 `(talk is cheap , show me the code)`
+
+> %e5%86%99%e4%b8%80%e7%b3%bb%e5%88%97%e6%96%87%e7%ab%a0%e5%85%b3%e4%ba%8e%e5%a6%82%e4%bd%95%e4%bb%8e0%e5%88%b0%e8%83%bd%e5%ba%94%e5%af%b9%e5%a4%a7%e5%a4%9a%e6%95%b0%e4%b8%9a%e5%8a%a1%e7%9a%84%e7%a8%8b%e5%ba%8f%e5%91%98%ef%bc%8c%e5%be%97%e7%ad%89%e6%88%91%e5%b7%a5%e4%bd%9c%e4%b8%80%e5%b9%b4%e4%bb%a5%e5%90%8e%e4%ba%86%ef%bc%8c%e7%95%99%e7%bb%99%e5%b7%a5%e4%bd%9c%e5%ae%a4%e4%b8%80%e4%b8%aa%e5%bd%a9%e8%9b%8b%ef%bc%8c%e4%b8%80%e5%ae%9a%e8%a6%81%e6%8a%8a%e5%b7%a5%e4%bd%9c%e5%ae%a4%e5%81%9a%e4%b8%8b%e5%8e%bb%e5%95%8a%7e%7e%7e%ef%bc%8c%e6%8a%8a%e8%bf%99%e4%b8%aa%e9%a1%b9%e7%9b%ae%e7%95%99%e5%a5%bd%7e%7e%7e%7e%7e
