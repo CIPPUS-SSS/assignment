@@ -3,7 +3,7 @@ skiplist的讲义.
 [Pugh 1989]
 
 ##链表的表现
-插入删除是常数的,
+插入删除是常数的,(常数删除比较有意思)
 但是搜索是O(n)[如果不是二分搜索的话].
 如果是线性查找不能马上移动到某个中间结点.
 
@@ -13,6 +13,7 @@ skiplist 相对于 treaps,red-black tree,B-tree 手写更容易实现.
 
 试问谁能在1到2个小时之内,不参考其他代码.写出一个红黑树?
 但是skiplist可以做到,因为结构简单.
+还有一点redis在数据结构里面用的是skiplist,原因是为了降低并发锁的粒度.
 
 Randmized structure.
 
@@ -44,10 +45,6 @@ Insert(x);
 	flip a coin  丢硬币,1/2之一的概率向上伸展.
 	if heads x promote to next level
 	flip coin again
-
-注释:
-heads 是正面的意思
-tails 是反面的意思
 
 PS:
 	always stores -minus infinity.
@@ -81,4 +78,5 @@ PS:
 
 coin flip迭代1/2的高度.
 
-
+http://dsqiu.iteye.com/blog/1705530
+http://stats.stackexchange.com/questions/136806/expected-number-of-tosses-till-first-head-comes-up
